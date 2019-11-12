@@ -1,0 +1,54 @@
+version: '2'
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: 127.0.0.1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+
+  redis:
+    build: redis
+    container_name: redis
+
+  visitor:
+    build: agent
+    container_name: visitor
+    depends_on:
+      - redis
+      - kafka
+    entrypoint: ./src/runvisitor.sh
+
+  scraper:
+    build: agent
+    container_name: scraper
+    depends_on:
+      - visitor
+      - kafka
+    entrypoint: ./src/runsraper.sh
+
+  downpg:
+    build: agent
+    container_name: ds1
+    depends_on:
+      - scraper
+      - kafka
+    entrypoint: ./src/rundownpg.sh
+
+  downpipeline:
+    build: agent
+    container_name: ds2
+    depends_on:
+      - scraper
+      - kafka
+    entrypoint: ./src/rundownpipeline.sh

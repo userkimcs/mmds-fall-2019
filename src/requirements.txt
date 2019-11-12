@@ -1,0 +1,4 @@
+kafka-python
+sqlalchemy
+nltk
+newspaper3k
