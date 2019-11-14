@@ -62,7 +62,7 @@ if __name__ == "__main__":
                     # get content
                     data, keywords = get_content(url)
                     # insert
-                    pg.query("INSERT INTO articles(data) VALUES('{}')".format(datetime.now(), json.dumps(data)))
+                    pg.query("INSERT INTO articles(data) VALUES('{}')".format(json.dumps(data)))
                     print("INSERT articles")
                     # insert
                     time.sleep(0.01)
