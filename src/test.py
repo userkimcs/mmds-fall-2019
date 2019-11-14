@@ -31,7 +31,7 @@ def get_content(input_url):
 
 
 if __name__ == "__main__":
-
+    download_nltk()
     pg = DatabaseService(
         host="10.255.255.6",
         user="postgres",
