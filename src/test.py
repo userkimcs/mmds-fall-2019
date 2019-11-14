@@ -36,7 +36,7 @@ if __name__ == "__main__":
     pg = DatabaseService(
         host="10.255.255.6",
         user="postgres",
-        password=None,
+        password='',
         port=5432,
         database="data"
     )
