@@ -68,13 +68,19 @@ if __name__ == "__main__":
                         continue
                         
                     # insert
-                    pg.query("INSERT INTO articles(data) VALUES('{}')".format(json.dumps(data)))
-                    print("INSERT articles")
+                    try:
+                        pg.query("INSERT INTO articles(data) VALUES('{}')".format(json.dumps(data)))
+                        print("INSERT articles")
+                    except:
+                        pass
                     # insert
                     time.sleep(0.01)
 
                     for keyword in keywords:
-                        pg.query("INSERT INTO kw_stream VALUES('{}', '{}')".format(datetime.now(), keyword))
-                        print("Insert {}".format(keyword))
+                        try:
+                            pg.query("INSERT INTO kw_stream VALUES('{}', '{}')".format(datetime.now(), keyword))
+                            print("Insert {}".format(keyword))
+                        except:
+                            pass
 
         time.sleep(10)
