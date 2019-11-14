@@ -7,6 +7,13 @@ from helpers import get_keywords
 import json
 
 
+def download_nltk():
+    nltk.download('words')
+    nltk.download('maxent_ne_chunker')
+    nltk.download('averaged_perceptron_tagger')
+    nltk.download('punkt')
+
+
 def get_content(input_url):
     article = Article(input_url)
     article.download()
