@@ -16,20 +16,22 @@ def download_nltk():
 
 
 def get_content(input_url):
-    article = Article(input_url)
-    article.download()
-    article.parse()
-    # add article object (full text, title, date, authors)
-    article_dict = dict()
-    article_dict['url'] = input_url
-    article_dict['text'] = article.text
-    article_dict['title'] = article.title
-    article_dict['authors'] = article.authors
-    keywords = get_keywords(article.text)
-    keywords.extend(get_keywords(article.title))
+    try:
+        article = Article(input_url)
+        article.download()
+        article.parse()
+        # add article object (full text, title, date, authors)
+        article_dict = dict()
+        article_dict['url'] = input_url
+        article_dict['text'] = article.text
+        article_dict['title'] = article.title
+        article_dict['authors'] = article.authors
+        keywords = get_keywords(article.text)
+        keywords.extend(get_keywords(article.title))
 
-    return article_dict, keywords
-
+        return article_dict, keywords
+    except:
+        return None, None
 
 if __name__ == "__main__":
     download_nltk()
@@ -61,6 +63,10 @@ if __name__ == "__main__":
                     exist_urls.set(encoded_url, 0)
                     # get content
                     data, keywords = get_content(url)
+                    
+                    if data is None:
+                        continue
+                        
                     # insert
                     pg.query("INSERT INTO articles(data) VALUES('{}')".format(json.dumps(data)))
                     print("INSERT articles")
