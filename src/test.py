@@ -5,6 +5,7 @@ from datetime import datetime
 from newspaper import Article
 from helpers import get_keywords
 import json
+import nltk
 
 
 def download_nltk():
