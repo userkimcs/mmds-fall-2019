@@ -50,6 +50,7 @@ if __name__ == "__main__":
 
         for homepage in homepages:
             homepage = homepage.strip()
+            print(homepage)
             # send encoded home page to redis anh add to kafka consumer
             all_urls = get_absolute_links(homepage)
             for url in all_urls:
